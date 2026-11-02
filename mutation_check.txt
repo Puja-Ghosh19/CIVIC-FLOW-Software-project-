@@ -1,0 +1,17 @@
+Mutation check (bug planted in app.py, then restored). Each planted bug must make at least one test fail.
+
+Mutant: remove owner check on document download
+FAIL: test_tc81_other_user_cannot_open_document
+FAILED (failures=1)
+
+Mutant: upload size limit off by one
+FAIL: test_tc44_size_boundary_exactly_5mb_accepted
+FAILED (failures=1)
+
+Mutant: required documents not enforced
+FAIL: test_tc62_missing_required_document_blocks_submission
+FAILED (failures=1)
+
+Mutant: password stored as plain text
+FAIL: test_tc02_password_is_stored_hashed_not_plain
+FAILED (failures=1)
