@@ -1,0 +1,74 @@
+{% extends "base.html" %}{% block title %}CIVIC-FLOW | Public services, made simpler{% endblock %}{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow"> YOUR GUIDE TO PUBLIC SERVICES</div>
+        <h1>Every service.<br><span>One place.</span></h1>
+        <p class="hero-lead">Find the service that fits your needs, learn what to prepare, and keep your application
+            details together in one calm, simple space.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="/finder">Find my service <span>↗</span></a><a
+                class="btn btn-quiet" href="/services">Explore services <span>→</span></a></div>
+        <div class="hero-proof">
+            <div class="proof-avatars"><span>✓</span><span>01</span><span>02</span></div>
+            <p><strong>A helpful place to start</strong><br><small>Guidance for everyday tasks</small></p>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="visual-glow"></div>
+        <div class="visual-window">
+            <div class="window-top"><span>Service overview</span><span
+                    class="live-pill">GUIDE</span></div>
+            <div class="visual-welcome">
+                <div><small>LET'S GET STARTED</small>
+                    <h3>What would you like help with?</h3>
+                </div>
+            </div>
+            <div class="visual-option"><span class="option-icon green">▤</span>
+                <div><strong>Identity & documents</strong><small>NID, birth certificate, passport</small></div><span
+                    class="option-arrow">↗</span>
+            </div>
+            <div class="visual-option"><span class="option-icon yellow">⌂</span>
+                <div><strong>Business & local services</strong><small>Licences and local government</small></div><span
+                    class="option-arrow">↗</span>
+            </div>
+            <div class="visual-option"><span class="option-icon blue">◎</span>
+                <div><strong>Track an application</strong><small>Check your latest status</small></div><span
+                    class="option-arrow">↗</span>
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+<section class="section-block">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">HOW CIVIC-FLOW HELPS</div>
+            <h2>Make your next step <span>feel easier.</span></h2>
+        </div>
+        
+    </div>
+    <div class="feature-grid"><a class="feature-card" href="/finder"><span class="feature-icon fi-green">⌕</span><span
+                class="feature-kicker">01 / DISCOVER</span>
+            <h3>Smart Service Finder</h3>
+            <p>Tell us what you need in your own words and see a possible match.</p><span class="feature-link">Find a
+                service ↗</span>
+        </a><a class="feature-card" href="/services"><span class="feature-icon fi-yellow">▤</span><span
+                class="feature-kicker">02 / PREPARE</span>
+            <h3>Document guidance</h3>
+            <p>See the information and documents you may need before you begin.</p><span class="feature-link">Browse
+                services ↗</span>
+        </a><a class="feature-card" href="/dashboard"><span class="feature-icon fi-blue">◎</span><span
+                class="feature-kicker">03 / FOLLOW UP</span>
+            <h3>Application tracking</h3>
+            <p>Keep your reference number handy and review the latest status recorded here.</p><span
+                class="feature-link">View dashboard ↗</span>
+        </a></div>
+</section>
+<section class="bottom-cta">
+    <div>
+        <div class="eyebrow eyebrow-light">START WITH ONE SIMPLE STEP</div>
+        <h2>Not sure where to start?</h2>
+        <p>Describe what you need help with. We will suggest a service from the available list.</p>
+    </div><a class="btn btn-white" href="/finder">Try Smart Finder <span>↗</span></a>
+</section>
+{% endblock %}

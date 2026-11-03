@@ -1,0 +1,62 @@
+{% extends "base.html" %}{% block title %}Smart Finder | CIVIC-FLOW{% endblock %}{% block content %}
+<section class="page-heading">
+    <div class="eyebrow">PERSONALISED SERVICE GUIDANCE</div>
+    <h1>Let’s find your next <span>step.</span></h1>
+    <p>Tell us what you need in your own words. We’ll look for a service that may be a good fit.</p>
+</section>
+<div class="finder-layout">
+    <section class="finder-panel">
+        <div class="finder-panel-head">
+            <div>
+                <h2>What can we help you find?</h2>
+                <p>A short description is enough to get started.</p>
+            </div>
+        </div>
+        <form method="post" class="finder-form"><label for="problem">What are you trying to do?</label><textarea
+                id="problem" name="problem"
+                placeholder="For example: I need to correct the spelling of my name on my NID..."
+                required>{{ request.form.get('problem','') }}</textarea>
+            
+       
+        </form>
+    </section>
+    <aside class="finder-aside">
+        <h3>Here’s what you can do next</h3>
+        <div class="mini-step"><span>1</span>
+            <div><strong>Tell us what you need</strong>
+                <p>Use simple words, no special format needed.</p>
+            </div>
+        </div>
+        <div class="mini-step"><span>2</span>
+            <div><strong>Check the suggestion</strong>
+                <p>Check the service details and requirements.</p>
+            </div>
+        </div>
+        <div class="mini-step"><span>3</span>
+            <div><strong>Prepare and follow up</strong>
+                <p>Review the next steps and track your record.</p>
+            </div>
+        </div>
+    </aside>
+</div>
+{% if result %}<section class="finder-result" id="result">
+    <div class="result-label"><span>✓</span> YOUR SUGGESTED SERVICE</div>
+    <div class="result-main">
+        <div>
+            <h2>{{ result.name }}</h2>
+            <p>{{ result.reason }}</p>
+        </div>{% if result.id %}<a class="btn btn-primary" href="/service/{{ result.id }}">View service details ↗</a>{%
+        else %}<a class="btn btn-primary" href="/services">Browse services ↗</a>{% endif %}
+    </div>{% if result.tips %}<div class="notice" style="margin-top:14px"><b>Helpful tips</b>
+        <ul style="margin:8px 0 0;padding-left:18px">{% for t in result.tips %}<li style="margin-bottom:6px">{{ t }}
+            </li>{% endfor %}</ul>
+    </div>{% endif %}{% if not result.id and services %}<div style="margin-top:14px"><b style="font-size:12px">Pick a
+            service:</b>
+        <div class="prompt-chips">{% for sv in services %}<a href="/service/{{ sv.id }}"
+                class="btn btn-quiet btn-small">{{ sv.name }}</a>{% endfor %}</div>
+    </div>{% endif %}<p class="result-disclaimer">This demo matches words in your description to the available service
+        list. If the suggestion does not fit, try different wording or browse all services.</p>
+</section>{% endif %}
+{% if result %}
+<script>document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });</script>{% endif %}
+{% endblock %}

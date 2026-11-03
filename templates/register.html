@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block title %}Create Account | CIVIC-FLOW{% endblock %}{% block content %}<section
+    class="auth-layout">
+    <div class="auth-aside">
+        <div class="eyebrow eyebrow-light">GET STARTED</div>
+        <h1>A simpler way to explore <span>public services.</span></h1>
+        <p>Create an account to keep your CIVIC-FLOW application records and updates in one place.</p>
+        <div class="auth-aside-points"><span>✓ Find service guidance</span><span>✓ Keep track of submitted
+                records</span><span>✓ See status notifications</span></div>
+        <div class="auth-decor">C</div>
+    </div>
+    <div class="auth-form-side">
+        <div class="auth-form-card">
+            
+            <div class="eyebrow">CREATE YOUR PROFILE</div>
+            <h2>Join CIVIC-FLOW</h2>
+            <p class="muted">Add a few details and you are ready to explore.</p>
+            <form method="post" class="stack-form"><label for="name">Full name</label><input id="name" name="name"
+                    placeholder="Enter your full name" required autocomplete="name"><label for="email">Email
+                    address</label><input id="email" name="email" placeholder="you@example.com" required type="email"
+                    autocomplete="email"><label for="password">Create password</label><input id="password"
+                    name="password" placeholder="Create a password" required type="password"
+                    autocomplete="new-password"><button class="btn btn-primary btn-full">Create account
+                    <span>↗</span></button></form>
+            <p class="auth-switch">Already have an account? <a href="/login">Sign in</a></p><small
+                class="form-note">This is a demo project. Please do not use a password you use for other
+                accounts.</small>
+        </div>
+    </div>
+</section>{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}{% block title %}Admin Dashboard | CIVIC-FLOW{% endblock %}{% block content %}<section
+    class="page-heading heading-row">
+    <div>
+        <div class="eyebrow">ADMINISTRATION</div>
+        <h1>Service <span>workspace.</span></h1>
+        <p>Keep service information organised and update the status recorded for each application.</p>
+    </div><span class="admin-pill">● Admin mode</span>
+</section>
+<div class="admin-stats">
+    <div class="stat-card"><span class="stat-icon fi-green">▤</span><small>LISTED SERVICES</small><strong>{{
+            services|length }}</strong><span>In the service catalogue</span></div>
+    <div class="stat-card"><span class="stat-icon fi-blue">◎</span><small>APPLICATION RECORDS</small><strong>{{
+            apps|length }}</strong><span>Across all users</span></div>
+    <div class="stat-card"><span class="stat-icon fi-yellow">◷</span><small>NEEDS REVIEW</small><strong>{{
+            apps|selectattr('status','equalto','Under Review')|list|length }}</strong><span>Currently under
+            review</span></div>
+</div>
+<section class="content-panel">
+    <div class="panel-heading">
+        <div>
+            <div class="eyebrow">SERVICE CATALOGUE</div>
+            <h2>Add a service guide</h2>
+            <p class="muted">Use clear, helpful wording so people can understand the service before they begin.</p>
+        </div><span class="panel-icon">＋</span>
+    </div>
+    <form method="post" class="admin-service-form"><input name="action" type="hidden" value="add">
+        <div class="admin-form-grid"><label>Service name<input name="name" placeholder="e.g. Passport Application"
+                    required></label><label>Department<input name="department" placeholder="Responsible department"
+                    required></label><label>Fee information<input name="fee"
+                    placeholder="e.g. Official fee varies"></label><label>Estimated days<input name="days"
+                    placeholder="e.g. 7" required type="number" min="1"></label><label
+                class="wide-field">Description<textarea name="description"
+                    placeholder="Briefly explain what this service is for..." required></textarea></label></div><button
+            class="btn btn-primary">Add service <span>↗</span></button>
+    </form>
+</section>
+<section class="content-panel">
+    <div class="panel-heading">
+        <div>
+            <div class="eyebrow">APPLICATION MANAGEMENT</div>
+            <h2>Application overview</h2>
+        </div><span class="count-pill">{{ apps|length }} records</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Service</th>
+                    <th>Reference</th>
+                    <th>Current status</th>
+                    <th>Documents</th>
+                    <th>Update status</th>
+                </tr>
+            </thead>
+            <tbody>{% for a in apps %}<tr>
+                    <td><strong>{{ a.user_name }}</strong></td>
+                    <td>{{ a.service_name }}</td>
+                    <td><span class="reference-code">{{ a.reference }}</span></td>
+                    <td><span class="status-badge status-{{ a.status|lower|replace(' ','-') }}">{{ a.status }}</span>
+                    </td>
+                    <td><a class="table-link" href="/admin/application/{{ a.id }}">View →</a></td>
+                    <td>
+                        <form method="post" class="status-form"><input name="action" type="hidden" value="status"><input
+                                name="app_id" type="hidden" value="{{ a.id }}"><select name="status"
+                                aria-label="New status for {{ a.reference }}">{% for status in ['Submitted','Under
+                                Review','Verification','Processing','Approved','Rejected'] %}<option {% if
+                                    a.status==status %}selected{% endif %}>{{ status }}</option>{% endfor
+                                %}</select><button class="btn btn-primary btn-small">Save</button></form>
+                    </td>
+                </tr>{% else %}<tr>
+                    <td colspan="6">
+                        <div class="empty-state"><span>◎</span><strong>No application records yet</strong>
+                            <p>When a user submits an application, the record will appear here.</p>
+                        </div>
+                    </td>
+                </tr>{% endfor %}</tbody>
+        </table>
+    </div>
+</section>{% endblock %}

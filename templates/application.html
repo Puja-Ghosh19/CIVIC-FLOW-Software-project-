@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+.apply-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.apply-grid .full{grid-column:1/-1}
+.formbox label{display:block;font-size:12px;font-weight:800;color:#43554a;margin-top:10px}
+.formbox textarea,.formbox input[type=date],.formbox input[type=tel]{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px;margin:6px 0;font:inherit}
+.formbox textarea{min-height:80px;resize:vertical}
+.check-row{display:flex!important;gap:10px;align-items:flex-start;font-weight:500!important;font-size:13px!important;padding:11px 13px;border:1px solid var(--line);border-radius:10px;margin:8px 0!important;background:#fcfcfe;cursor:pointer}
+.check-row input{width:auto!important;margin:3px 0 0!important}
+.errors{background:#fbe7e4;border:1px solid #f0c8c2;color:#8d3a30;border-radius:10px;padding:12px 16px;margin:14px 0;font-size:13px}
+.errors ul{margin:6px 0 0;padding-left:18px}
+.upload-row{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:9px 0;background:#fcfcfe}.upload-label{font-size:13px;font-weight:700;margin-bottom:8px}.upload-row input[type=file]{width:100%;font-size:12px;margin:0!important;padding:6px 0!important;border:0!important}.progress-note{font-size:12px;color:#5d6e64;margin:4px 0 8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+@media(max-width:680px){.apply-grid{grid-template-columns:1fr}}
+</style>
+<div class="formbox">
+ <h2>Start your application</h2>
+ <h3>{{service.name}}</h3>
+ <p>{{service.description}}</p>
+
+ {% if errors %}
+ <div class="errors"><b>Please fix the following:</b><ul>{% for e in errors %}<li>{{e}}</li>{% endfor %}</ul></div>
+ {% endif %}
+
+ <form method="post" id="applyForm" enctype="multipart/form-data">
+  <div class="apply-grid">
+   <div class="full"><label for="full_name">Full name (as on your documents)</label>
+    <input id="full_name" name="full_name" value="{{form.get('full_name','')}}" required></div>
+   <div><label for="phone">Phone number</label>
+    <input id="phone" name="phone" type="tel" value="{{form.get('phone','')}}" required></div>
+   <div><label for="dob">Date of birth</label>
+    <input id="dob" name="dob" type="date" value="{{form.get('dob','')}}" required></div>
+   <div class="full"><label for="address">Address</label>
+    <textarea id="address" name="address" required>{{form.get('address','')}}</textarea></div>
+  </div>
+
+  {% if requirements %}
+  <h3 style="margin-top:24px">Upload your documents</h3>
+  <p class="progress-note">PDF, JPG or PNG, up to 5 MB each. Required documents must be uploaded. <b id="count"></b></p>
+  {% for r in requirements %}
+  <div class="upload-row">
+   <div class="upload-label">{{r.document_name}} <small style="color:{% if r.required %}#a4473b{% else %}#6b7a71{% endif %}">({% if r.required %}required{% else %}if applicable{% endif %})</small></div>
+   <input type="file" name="doc_{{r.id}}" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" data-required="{{r.required}}">
+  </div>
+  {% endfor %}
+  {% if errors %}<p class="muted">If you saw an error, please select your files again. Browsers do not keep chosen files for safety.</p>{% endif %}
+  {% endif %}
+
+  <label class="check-row" style="margin-top:18px!important">
+   <input type="checkbox" name="declare" id="declare" {% if form.get('declare') %}checked{% endif %}>
+   <span>I have completed the steps for this service, and I confirm that the details and uploaded documents are correct.</span>
+  </label>
+
+  <button class="btn btn-primary" id="submitBtn" style="margin-top:12px">Confirm and submit</button>
+  <p class="muted" style="margin-top:12px">This creates a CIVIC-FLOW record to track your progress. It does not submit anything to a government portal.</p>
+ </form>
+</div>
+<script>
+(function(){
+ var form=document.getElementById('applyForm'),btn=document.getElementById('submitBtn'),count=document.getElementById('count');
+ var docs=[].slice.call(form.querySelectorAll('input[type=file]')),declare=document.getElementById('declare');
+ function update(){
+  var req=docs.filter(function(d){return d.dataset.required==='1'});
+  var done=req.filter(function(d){return d.files&&d.files.length>0}).length;
+  if(count)count.textContent='('+done+' of '+req.length+' required documents uploaded)';
+  btn.disabled=!(done===req.length&&declare.checked);
+ }
+ form.addEventListener('change',update);update();
+})();
+</script>
+{% endblock %}
