@@ -10,7 +10,14 @@ from datetime import datetime
 from service_finder import find_service
 from time_prediction import predict_days
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
+
 app.secret_key = os.getenv("CIVIC_FLOW_SECRET_KEY", "change-this-demo-key")
 
 # Uploaded documents are stored here (outside static/, so they are never public).
