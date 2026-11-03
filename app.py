@@ -7,8 +7,9 @@ import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
 from pymysql.cursors import DictCursor
 from datetime import datetime
-from ai.service_finder import find_service
-from ai.time_prediction import predict_days
+from service_finder import find_service
+from time_prediction import predict_days
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv("CIVIC_FLOW_SECRET_KEY", "change-this-demo-key")
