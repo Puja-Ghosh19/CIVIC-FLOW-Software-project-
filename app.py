@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("CIVIC_FLOW_SECRET_KEY", "change-this-demo-key")
 
 # Uploaded documents are stored here (outside static/, so they are never public).
-UPLOAD_DIR = os.getenv("UPLOAD_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads"))
+UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 MAX_FILE_BYTES = 5 * 1024 * 1024           # 5 MB per document
 app.config["MAX_CONTENT_LENGTH"] = 40 * 1024 * 1024
@@ -247,10 +247,8 @@ def init_db():
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4""")
 
     if c.execute("SELECT COUNT(*) AS total FROM users").fetchone()["total"] == 0:
-        admin_email = os.getenv("CIVIC_FLOW_ADMIN_EMAIL", "admin@civicflow.com")
-        admin_password = os.getenv("CIVIC_FLOW_ADMIN_PASSWORD", "admin123")
         c.execute("INSERT INTO users(name,email,password,role) VALUES(?,?,?,?)",
-                  ("Admin", admin_email, generate_password_hash(admin_password), "admin"))
+                  ("Admin", "admin@civicflow.com", generate_password_hash("admin123"), "admin"))
     if c.execute("SELECT COUNT(*) AS total FROM services").fetchone()["total"] == 0:
         data = [
             ("NID Application (New NID)", "Prepare a new NID application checklist and track your CIVIC-FLOW request.", "Bangladesh Election Commission", "Check official source", 15),
